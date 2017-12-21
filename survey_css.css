@@ -1,0 +1,61 @@
+textarea
+{
+  margin-top: 10px;
+}
+sample
+{
+   display: none;
+    
+}
+header, footer 
+{
+    padding: 1em;
+    color: white;
+    background-color: black;
+    clear: left;
+    text-align: center;
+}
+
+#nav,#article{
+	display: table-cell;
+}
+#nav
+{
+    float: left;
+    width: 250px;
+    margin: 0;
+    padding: 1em;
+    border-right: 2px solid gray;
+}
+#article 
+{
+    margin-left: 170px;
+    margin: 5px;
+    border-left: 1px solid gray;
+
+    padding: 1em;
+    overflow: hidden;
+}
+
+.modal-header, h4, .close {
+      background-color: white;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+
+  }
+
+  .instruction_box{
+	padding : 5px;
+	border : #D4D0C8;
+	background-color : #f5f5f5;
+	border-style : solid;
+	border-top-width : 1px;
+	border-right-width : 1px;
+	border-bottom-width : 1px;
+	border-left-width : 1px;
+	margin:5px;
+}
+

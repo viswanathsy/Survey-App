@@ -1,0 +1,128 @@
+<div id = "sample_checkbox_question" class="question_area">	
+	<hr align="center" size="1" width="100%" noshade color="#D4D0C8" />
+	<textarea rows="4" cols="70" placeholder="Enter the Question" class="question" name="question[]">	
+	</textarea>
+	<div id = "sample_checkbox_answers" class="answer_area checkbox">
+				<ol>					
+					<div class="chk-opts" id = "chk-opts">
+						<br /><input type="checkbox" name="sample_chk_opt">Option 1				
+					</div>
+					<br/>
+				</ol>	
+			</div>	
+</div>
+<hr align="center" size="1" width="100%" noshade color="#D4D0C8" />
+
+
+ <div id = "chk_question1" class="instruction_box">
+	    		<hr align="center" size="1" width="100%" noshade color="#D4D0C8" />
+				<ol>
+					<li style="list-style: none;">
+						<textarea rows="4" cols="70" placeholder="Enter the Question" class="question" name="question[]">						
+						</textarea>
+					</li>				
+					<div class="chk-opts" id = "chk-opts">
+					<br /><input type="checkbox" name="c1" contenteditable="true">Option 1				
+					</div>
+					<br/>
+				</ol>	
+			</div>	
+			<div id = "radio_question1" name = "test">
+	    	<hr align="center" size="1" width="100%" noshade color="#D4D0C8" />
+				<ol  style="list-style: none;">
+					<li>
+						<textarea rows="4" cols="70" placeholder="Enter the Question" class="question">						
+						</textarea>
+					</li>
+					<div class="rad-opts" id = "rad-opts">
+					</div>
+				</ol>
+			</div>	
+			<input id ="submit" name="submit" value="Finish" readonly="true">
+
+
+$("#rad").click(function()
+        		{
+					var	 $ctrl = $('<br/><input/>').attr({ type: 'radio', name:'q1'}).addClass("rad");
+					$("#rad-opts").append($ctrl);			
+					var $ctrl1 = $('<label/>').attr({ type: 'text', name:'text', placeholder:'text' ,contenteditable:'true'}).addClass("text");
+					$("#rad-opts").append($ctrl1);			
+				});*/
+
+				/*$("#chk").click(function()
+        		{
+					var	 $ctrl = $('<br/><input/>').attr({ type: 'checkbox', name:'c1'}).addClass("rad");
+					$("#chk-opts").append($ctrl);			
+					var $ctrl1 = $('<label/>').attr({ type: 'text', name:'text', placeholder:'text' ,contenteditable:'true'}).addClass("text");
+					$("#chk-opts").append($ctrl1);			
+				});*/
+
+
+
+$("#checkbox").click(function()
+        		{
+
+					$question = $('#sample_checkbox_question').clone();
+					
+
+					if($('$[id^="added_question"]:last').length ===0)
+					{
+						num = 1;
+						alert("if");
+					}
+					else
+					{
+    					var num = parseInt( $div.prop("id").match(/\d+/g), 10 ) +1;
+    					alert("else")
+    					var $div = $('div[id^="added_question"]:last');
+					}
+					alert(num);					
+					$question.attr('id','added_question'+num);
+					$question.attr('class','added_ques');
+					$question.appendTo($('#questions'));
+				});
+
+				$("#radio").click(function()
+        		{
+					var $div = $('div[id^="radio_question"]:last');
+    				var num = parseInt( $div.prop("id").match(/\d+/g), 10 ) +1;
+    				alert(num);					
+					var $klon = $div.clone();	
+					$klon.attr('class','added_ques');
+					$klon.attr('id', 'radio_question'+num );
+					$("#article").append($klon);	
+
+
+
+				});			
+
+
+--reset modal
+('#modal-checkbox').remove();
+				    var myClone = originalModal.clone();
+				    $('body').append(myClone);				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------
+
+
+				    $("#checkbox").click(function()
+        		{
+					var $div = $('div[id^="chk-opts"]:last');					
+    				var num = parseInt( $div.prop("id").match(/\d+/g), 10 ) +1;
+					var $klon = $div.clone().prop('id', 'klon'+num );
+					$div.after( $klon.text('klon'+num) );				
+				});

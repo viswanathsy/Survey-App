@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8" />
+        <title>Teacher to Subject Allocation</title>
+        		<?PHP INCLUDE_ONCE 'db_config.php';		?>
+ 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="test.css" />                
+<style>
+  .modal-header, h4, .close {
+      background-color: white;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+
+  }
+  #create {width:auto;margin:auto;position:relative;float:right}
+  </style>
+</head>
+   
+<body>
+
+<form method="POST" action="test.php">
+        <div id="users-contain" class="ui-widget">
+            	
+
+            <table border="1" id = "table1" style="margin-left: 50px">            
+			<tr>
+				<th style="display: none;">Teacher Name</th>	
+				<th>Student Name</th>	
+				<th>Class</th>	
+				<th>Section</th>	
+				<th>Mobile Number</th>	
+				<th>Actions</th>	
+			</tr>
+			<tbody>			
+			<?php
+			
+					$sql = "select stu_name,class,section,mob_num,email_id from students where class = 1 and section = 1";
+					$result = $conn->query($sql);			
+				
+				while($row = $result->fetch_assoc()) 
+				{
+     		   		echo "<tr>";
+     		   			echo "<td style=\"display:none;\" value =".$row["tsc_id"] ."align='center'>".$row["tsc_id"]."</td>";
+           				echo "<td value =".$row["teacher_id"] ."align='center'>".$row["teacher_name"]."</td>";
+				        echo "<td  value =".$row["class_id"] ."contenteditable=\"true\" width='200'>".$row["class_name"]."</td>";
+				        echo "<td value = ".$row["subject_id"]."width='200'>".$row["subject_name"]."</td>";
+				         echo "<td><a class = \"edit\">Edit</a></td>";
+            			 echo "<td><a class=\"delete\">Delete</a></td>";
+
+				    echo "</tr>";
+    			}		
+    			
+		?>
+		
+		</tbody>
+		</table>
+        </div>
+        
+        <br/>
+        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">       
+    <div class="modal-content">
+    <div class="modal-header" style="padding:35px 50px;">
+                    <label for="teacher" >Teacher</label>
+                    <select id="teacher" name = "teacher">        
+                    <option selected="true" disabled="true">Select Teacher</option>            
+                    <?php 
+					$sql = mysqli_query($conn, "SELECT * FROM teacher");
+					while ($row = $sql->fetch_assoc())
+						{
+							echo "<option value=".$row['Teacher_id'].">" .$row['Teacher_name'] . "</option>";
+						}?>
+                    </select>
+                    <label for="class">Class</label>
+                    <select id="class" name = "class">                    
+                    <option selected="true" disabled="true">Select Class</option>            
+                        <?php 
+					$sql = mysqli_query($conn, "SELECT * FROM class");
+					while ($row = $sql->fetch_assoc())
+						{
+							echo "<option  value=".$row['class_id'].">" .$row['class_name'] . "</option>";
+						}			
+						?>
+                    </select>
+                    <label for="subject">Subject</label>
+                    <select id="subject" name = "subject">                    
+                    <option selected="true" disabled="true">Select Subject</option>            
+                        <?php 
+					$sql = mysqli_query($conn, "SELECT * FROM subject");
+					while ($row = $sql->fetch_assoc())
+						{
+							echo "<option  value=".$row['subject_id'].">" .$row['subject_name'] . "</option>";
+						}			
+						?>
+                    </select>
+                    <select id="temp" name = "temp" style="display: none;">                    
+                        <?php 
+					$sql = mysqli_query($conn, "SELECT tsc_id FROM Teacher_class_subject_mapping");
+					while ($row = $sql->fetch_assoc())
+						{
+							echo "<option  value=".$row['tsc_id'].">" .$row['tsc_id'] . "</option>";
+						}			
+						?>
+                    </select>
+                <br/>
+           </div>       
+           <td colspan="2"><input readonly="true" value="Save" name ="save" id="save"/></td>
+           <input readonly="true" value="Save" id = "add" name = "add"/>');
+           <span class="glyphicon glyphicon-remove">          	
+           </span> Cancel</button>
+          <div class="modal-footer"></div>                 
+			</div>
+		  </div> 
+	</div>
+	</form>
+	
+    </body>
+
+</html>

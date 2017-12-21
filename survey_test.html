@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<?php
+	include_once 'db_config.php';
+?>
+<html>
+<head>
+	<title>Attempt Survey</title>
+	</script>
+</head>
+
+<style type="text/css">
+	.question
+	{
+		padding : 5px;
+		border : #D4D0C8;
+		background-color : #f5f5f5;
+		border-style : solid;
+		border-top-width : 1px;
+		border-right-width : 1px;
+		border-bottom-width : 1px;
+		border-left-width : 1px;
+		height: 30px;
+		margin: 5px;
+	}
+	.radio_input
+	{
+		font-family : Arial, Verdana, Geneva, Helvetica, sans-serif;
+		font-size : 10px;
+		padding : 10px;
+		margin: 10px;
+		border : #000000;
+		background-color : #ffffff;
+		border-style : solid;
+		border-top-width : 1px;
+		border-right-width : 1px;
+		border-bottom-width : 1px;
+		border-left-width : 1px
+	}
+</style>
+
+<body>
+<div id = "survey_div">
+<form action= "survey_attempt.php" method="POST">
+	<ul style="list-style-type: none;">
+		<input id = "q1" type= "checkbox">
+		<input id = "q1" type= "checkbox">
+		<input id = "q1" type= "checkbox">
+		<!--?php
+			$sql = 'select * from QUESTIONS_MT';
+			$result = $conn->query($sql);
+					$var=0;
+					$num_qts=0;
+					while($row = $result->fetch_assoc())
+					{
+
+						echo "<li class='question'>".$row["PK_QUESTION_ID"].") ".$row["C_QUESTION_TEXT"]."</li>";
+							$sql12="select
+									 opt.pk_option_id opt_id,
+								 	 opt.c_option_text opt_text,
+								 	 survey.fk_question_sub_type_id subtype
+								from option_to_group_mapping_t ogm,
+									 options_mt opt,
+								 	 survey_questions_t survey,
+								 	 questions_mt question
+								where
+									 survey.fk_question_id = question.pk_question_id
+								and  opt.pk_option_id = ogm.fk_option_id
+								and  ogm.fk_option_group_id = survey.fk_option_group_id
+								and  survey.fk_question_id =".$row["PK_QUESTION_ID"];
+							$result2 =$conn->query($sql12);
+							while($row2 = $result2->fetch_assoc())
+									{
+										if($row2["subtype"] ==4)
+										{
+										echo "<input id = \"radio\" class='radio_input' type=\"radio\" name=answergroup[".$row["PK_QUESTION_ID"].
+										"] value=".$row2["opt_id"].">".$row2["opt_text"]."</input></br>";
+										}
+										else if($row2["subtype"] ==2)
+										{
+										echo "<input id = \"checkbox\" class='checkbox_input' type=\"checkbox\" name=answergroup[".$row["PK_QUESTION_ID"].
+										"] value=".$row2["opt_id"].">".$row2["opt_text"]."</input></br>";
+										}
+									}
+							echo("<br/>");
+						$num_qts++ ;
+					}
+		?-->
+	</ul>
+	<button style="align="centre" name ="save">Save</button>
+</form>
+
+<?php
+	if(isset($_POST['save']))
+		{
+			$x = count($_POST['answergroup']);
+			echo '<script>console.log(\'x is \')</script>';
+			echo '<script>console.log('.$x.')</script>';
+			print_r($_POST['answergroup']);
+
+			for ($i=1; $i<=$num_qts; $i++)
+				{
+					if (isset($_POST['answergroup'][$i])) 
+					{
+				    	foreach ($_POST['answergroup'][$i] as $day) 
+				    	{
+				        	$days[]t .= ' ' . $day;
+				    	}
+					}
+				    echo '<script>console.log(\'day\')</script>';
+				    echo '<script>console.log('.$days.')</script>';
+					//if(sizeof($_POST['answergroup'][$i]) > 1)
+					{
+						$size = count($_POST['answergroup'][$i]);
+						$countsss = $_POST['answergroup'][$i];
+						$languages = implode(',', $_POST['answergroup'][$i]);
+						echo '<script>console.log(\'checkbox\')</script>';
+						echo '<script>console.log(\'size\')</script>';
+						echo '<script>console.log('.$size.')</script>';
+						echo '<script>console.log(\'counts\')</script>';
+						echo '<script>console.log('.$countsss.')</script>';
+						echo '<script>console.log(\'langs\')</script>';
+						echo '<script>console.log('.$languages.')</script>';
+						echo '<script>console.log(\'checkbox end\')</script>';
+						$ins = "insert into survey_responses_t
+						(FK_SURVEY_ID,
+						FK_QUESTION_ID,
+						FK_OPTION_ID,
+						C_RESPONSE_TEXT,
+						FK_USER_ID,
+						D_RESPONSE_DATE,
+						FK_STATUS_ID,
+						FK_RESPONSE_MODE_ID) values ("
+						."1,"
+						.$i.","
+						.$_POST['answergroup'][$i].","
+						."null,1,sysdate(),1,1)";
+						$sql = mysqli_query($conn,$ins);
+					}
+					/*else
+					{
+						$checked = $_POST['answergroup'][$i];
+						$size = count($checked);
+						$countsss = $_POST['answergroup'][$i];
+						echo '<script>console.log(\'radio\')</script>';
+						echo '<script>console.log('.$countsss.')</script>';
+						echo '<script>console.log('.$checked.')</script>';
+						$ins = "insert into survey_responses_t
+						(FK_SURVEY_ID,
+						FK_QUESTION_ID,
+						FK_OPTION_ID,
+						C_RESPONSE_TEXT,
+						FK_USER_ID,
+						D_RESPONSE_DATE,
+						FK_STATUS_ID,
+						FK_RESPONSE_MODE_ID) values ("
+						."1,"
+						.$i.","
+						.$_POST['answergroup'][$i].","
+						."null,1,sysdate(),1,1)";
+						debugger;
+						$sql = mysqli_query($conn,$ins);
+					}*/
+				}
+				echo "<meta http-equiv='refresh' content='0'>";
+		}
+?>
+</div>
+</body>
+</html>
